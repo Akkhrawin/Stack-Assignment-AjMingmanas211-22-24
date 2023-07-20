@@ -4,43 +4,67 @@ using namespace std;
 #include <cstring>
 
 int main(int argc, char *argv[]) {
-  Stack s;
-  int i,j;
-  int match;
+  //Stack s;
+  int i,j, match, close;
   char c;
-  
-  for(j=1;j<argc;j++){
-    match = 1;
-  for(i=0;i<strlen(argv[1]);i++){
-    switch(argv[1][i]){
+  for (j=1;j<argc;j++){
+    Stack s;
+    match=1;
+    close=0;
+  for(i=0;i<strlen(argv[j]);i++){
+    switch(argv[j][i]){
       case '[':
+        s.push(argv[j][i]);
+        break;
       case '{':
-      s.push(argv[1][i]);
-      break;
-      
-      case ']':
-      c=s.pop();
-      if (c!='[') match=0;
-      break;
-      
+        s.push(argv[j][i]);
+        break;
       case '}':
-       c=s.pop();
-      if (c!='{') match=0;
-      break;
-      default:break;
-
-    }
+        c=s.pop();
+        //break;
+      if (c != '{')
+        match = 0;
+        if (c == 0 ) close=1;
+        break;
+      case ']':
+        c=s.pop();
+        //break;
+      if (c != '[')
+        match = 0;
+        if (c == 0 ) close=1;
+        break;
+      default: break;
+    }//end switch
+    if (match==0) break;
+    if (close==1) break;
+  }//end i loop
+  if(s.getSize()>0){
+    match=0;
   }
-  if (match==0) cout<<"Parentheses do not match"<<endl;
-    /*else if (s.get_size()>0) cout<<"To many open"<<endl;
-    else if (s.get_size()<0) cout<<"To many close"<<endl*/
-    else cout<<"Parenteses match"<<endl;
+  if(match==0){
+    cout<<"Parentheses do not match"<<endl;
+    if(close==1){
+      cout<<"too many close parenthesis"<<endl;
+    }
+    else if(s.getSize()>0)
+      cout<<"too many open parenthesis"<<endl;
+    else cout<<endl;
+  }
+  //else if(s.get_size()>0) //too many open
+  //else if() // too close open
+  else cout<<"Parentheses match"<<endl;
+  }//end j loop
 }
-}
-    /*else{
+   /*for(i=0;i<strlen(argv[1]);i++){
+    if (argv[1][i]=='x'){
+      //pop
+      s.pop();
+    }
+    else{
+      //push it
       s.push(atoi(argv[i]));
     }
-  }
+  }*/
  /*s.push(5);
   s.push(1);
   s.push(7);
